@@ -43,22 +43,16 @@ class ItemController extends Controller
         ], 201);
     }
 
-    public function show(Item $item)
+    public function show($id)
     {
-        //
+        $item = Item::findOrFail($id);
+        return response()->json([
+            'status' => true,
+            'message' => 'Item found successfully',
+            'data' => $item
+        ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Item $item)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
