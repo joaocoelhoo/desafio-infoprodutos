@@ -1,0 +1,99 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Item;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class ItemController extends Controller
+{
+    public function index()
+    {
+        $items = Item::all();
+        return response()->json([
+            'status' => true,
+            'message' => 'Items retrieved successfully',
+            'data' => $items
+        ], 200);
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'price' => 'required|decimal:2',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $items = Item::create($request->all());
+        return response()->json([
+            'status' => true,
+            'message' => 'Item created successfully',
+            'data' => $items
+        ], 201);
+    }
+
+    public function show(Item $item)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Item $item)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'price' => 'required|decimal:2',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $item = Item::findOrFail($id);
+        $item->update($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Item updated successfully',
+            'data' => $item
+        ], 200);
+    }
+
+    public function destroy($id)
+    {
+        $item = Item::findOrFail($id);
+        $item->delete();
+        
+        return response()->json([
+            'status' => true,
+            'message' => 'Item deleted successfully'
+        ], 204);
+    }
+}
