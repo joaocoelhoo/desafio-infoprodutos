@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -53,5 +54,17 @@ class UserController extends Controller
             'status' => true,
             'message' => 'User deleted successfully'
         ], 204);
+    }
+
+    public function assignRole(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        $user->assignRole($request->roleId);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Role assigned successfully',
+            'data' => $user
+        ], 200);
     }
 }
