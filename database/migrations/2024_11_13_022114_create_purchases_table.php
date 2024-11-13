@@ -19,7 +19,7 @@ return new class extends Migration
             );
         });
 
-        Schema::create('items_purchases', function (Blueprint $table) {
+        Schema::create('item_purchase', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId('item_id')->nullable()->constrained(

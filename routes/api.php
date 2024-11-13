@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PurchaseController;
 
 Route::post('register', [JWTAuthController::class, 'register']);
 Route::post('login', [JWTAuthController::class, 'login']);
@@ -25,6 +26,10 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('items/{id}', [ItemController::class, 'show']);
 
     Route::post('logout', [JWTAuthController::class, 'logout']);
+
+    Route::get('purchases', [PurchaseController::class, 'index']);
+    Route::post('purchases', [PurchaseController::class, 'store']);
+    Route::get('purchases/{id}', [PurchaseController::class, 'show']);
 });
 
 Route::middleware([JwtMiddleware::class, RoleMiddleware::class . ':admin'])->group(function () {
