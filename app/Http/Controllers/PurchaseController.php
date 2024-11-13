@@ -20,8 +20,9 @@ class PurchaseController extends Controller
         $purchases = $user->purchases()->with('items')->get();
 
         return response()->json([
+            'status' => true,
             'message' => 'Purchases retrieved successfully',
-            'purchases' => $purchases,
+            'data' => $purchases,
         ], 200);
     }
 
@@ -40,8 +41,9 @@ class PurchaseController extends Controller
         $purchase->items()->attach($validatedData['items']);
 
         return response()->json([
+            'status' => true,
             'message' => 'Purchase created successfully',
-            'purchase' => $purchase->load('items'),
+            'data' => $purchase->load('items'),
         ], 201);
     }
 
@@ -50,8 +52,9 @@ class PurchaseController extends Controller
         $purchase = Purchase::with('items')->findOrFail($id);
 
         return response()->json([
+            'status' => true,
             'message' => 'Purchase found successfully',
-            'purchase' => $purchase,
+            'data' => $purchase,
         ], 200);
     }
 }
