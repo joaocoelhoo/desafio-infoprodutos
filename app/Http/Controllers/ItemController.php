@@ -8,13 +8,21 @@ use Illuminate\Support\Facades\Validator;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::all();
+        $query = Item::query();
+
+        if ($request->has('category_id')) {
+            $categoryId = $request->input('category_id');
+            $query->where('category_id', $categoryId);
+        }
+
+        $items = $query->with('category')->get();
+
         return response()->json([
             'status' => true,
             'message' => 'Items retrieved successfully',
-            'data' => $items
+            'data' => $items,
         ], 200);
     }
 
