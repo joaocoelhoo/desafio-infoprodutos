@@ -33,11 +33,17 @@ Esta é uma API desenvolvida com Laravel 11 para um sistema de loja de infoprodu
    php artisan key:generate
    ```
 
-5. **Configure o banco de dados:**
+5. **Gere a chave JWT:**
+   ```bash
+   php artisan jwt:secret
+   ```
+   Esse comando irá adicionar `JWT_SECRET` ao seu arquivo `.env`.
+
+6. **Configure o banco de dados:**
    - Crie um banco de dados no MySQL.
    - Configure as credenciais do banco de dados no arquivo `.env`.
 
-6. **Execute as migrações e seeders:**
+7. **Execute as migrações e seeders:**
    ```bash
    php artisan migrate --seed
    ```
