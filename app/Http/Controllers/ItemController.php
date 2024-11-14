@@ -32,7 +32,7 @@ class ItemController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'price' => 'required|decimal:2',
-            'category_id' => 'exists:categories,id',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         if ($validator->fails()) {
@@ -67,7 +67,7 @@ class ItemController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'price' => 'required|decimal:2',
-            'category_id' => 'exists:categories,id',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         if ($validator->fails()) {
